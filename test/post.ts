@@ -14,6 +14,3 @@ describe("Post Route Test", () => {
         })
     })
 })
-
-
-import './comment'

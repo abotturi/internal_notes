@@ -14,5 +14,3 @@ describe("User Route Test", () => {
         })
     })
 })
-
-import './post'
