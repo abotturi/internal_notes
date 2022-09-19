@@ -33,3 +33,16 @@ userRouter.get('/:name', async (req, res) => {
         res.status(404).json({status: 'error', message: 'User not found'})
     }
 })
+
+userRouter.delete('/:name', async (req, res) => {
+    const nameUser = req.params.name
+    
+    const delInfo = await userContr.delete(nameUser)
+
+    if(delInfo){
+        res.status(200).json({status: 'success', message: 'Successfully deleted'})
+    }else{        
+        res.status(409).json({status: 'error', message: 'Error when deleting'})
+    }
+
+})
