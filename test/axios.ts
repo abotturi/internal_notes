@@ -23,3 +23,13 @@ export const postAxios = async (url: string = '/', data: {}) => {
         console.log(e)
     })
 }
+
+export const deleteAxios = async (url: string = '/') => {
+    return await instance.delete(url)
+    .then(res => {
+        return res.status
+    })
+    .catch(e => {
+        console.log(e)
+    })
+}
