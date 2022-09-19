@@ -99,6 +99,18 @@ export class postController{
     }
 
     async getUser(name: string, lastPost?: number, startDate?: Date , endDate?: Date, ){
+        const where: {
+            user?: {
+                name: string
+            },
+            id_post?: any
+            create_at?: any,
+        } = {}
+
+        if(name){
+            where.user = {name: name}
+        }
+
         if(startDate && endDate){
 
             const start = new Date(startDate)
@@ -107,94 +119,33 @@ export class postController{
             const end = new Date(endDate)
             end.setHours(23,59,59,999)
 
-            if(lastPost){
-                const allPost = await getRepository.find({
-                    where: {
-                        user: {name: name},
-                        id_post: MoreThan(lastPost),
-                        create_at: Between(start, end)
-                    },
-                    take: 5,
-                    order: {
-                        id_post: 'DESC'
-                    }
-                })
-                for(var i = 0; i < allPost.length; i++){
-                    if(allPost[i].repost){
-                        allPost[i].repost = await getRepository.findOne({
-                            where: {
-                                id_post: allPost[i].repost
-                            }
-                        })
-                    }
-                }                
-                return allPost
-            }else{
-                const allPost = await getRepository.find({
-                    where: {
-                        user: {name: name},
-                        create_at: Between(start, end)
-                    },
-                    take: 5,
-                    order: {
-                        id_post: 'DESC'
-                    }
-                })
-                for(var i = 0; i < allPost.length; i++){
-                    if(allPost[i].repost){
-                        allPost[i].repost = await getRepository.findOne({
-                            where: {
-                                id_post: allPost[i].repost
-                            }
-                        })
-                    }
-                }
-                return allPost
-            }
-        }else{
-            if(lastPost){
-                const allPost = await getRepository.find({
-                    where: {
-                        user: {name: name},
-                        id_post: MoreThan(lastPost)
-                    },
-                    take: 5,
-                    order: {
-                        id_post: 'DESC'
-                    }
-                })
-                for(var i = 0; i < allPost.length; i++){
-                    if(allPost[i].repost){
-                        allPost[i].repost = await getRepository.findOne({
-                            where: {
-                                id_post: allPost[i].repost
-                            }
-                        })
-                    }
-                }                
-                return allPost
-            }else{
-                const allPost = await getRepository.find({
-                    where: {
-                        user: {name: name}
-                    },
-                    take: 5,
-                    order: {
-                        id_post: 'DESC'
-                    }
-                })
-                for(var i = 0; i < allPost.length; i++){
-                    if(allPost[i].repost){
-                        allPost[i].repost = await getRepository.findOne({
-                            where: {
-                                id_post: allPost[i].repost
-                            }
-                        })
-                    }
-                }                
-                return allPost
-            }            
+            where.create_at = Between(start, end)
         }
+
+        if(lastPost){
+            where.id_post = MoreThan(lastPost)
+        }
+
+        const allPost = await getRepository.find({
+            relations: {
+                user: true,
+            },
+            where: where,
+            take: 5,
+            order: {
+                id_post: 'DESC'
+            }
+        })
+        for(var i = 0; i < allPost.length; i++){
+            if(allPost[i].repost){
+                allPost[i].repost = await getRepository.findOne({
+                    where: {
+                        id_post: allPost[i].repost
+                    }
+                })
+            }
+        }
+        return allPost
     }
 
     async getIdPost(id: number, name: string){
