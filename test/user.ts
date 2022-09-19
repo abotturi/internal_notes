@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { getAxios, postAxios } from './axios'
+import { deleteAxios, getAxios, postAxios } from './axios'
 
 describe("User Route Test", () => {
     describe('GET', () => {
@@ -11,6 +11,12 @@ describe("User Route Test", () => {
     describe('POST', () => {
         it('Add new user successfully', async () => {
             expect(await postAxios('/user', {name: 'Adandor'})).to.equal(200)
+        })
+    })
+    
+    describe('DELETE', () => {
+        it('User successfully deleted', async () => {
+            expect(await deleteAxios('/user/Adandor')).to.equal(200)
         })
     })
 })
