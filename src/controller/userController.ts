@@ -52,4 +52,18 @@ export class userController{
 
         return datasUser
     }
+
+    async delete(name: string){
+        const deleteData = await getRepository.createQueryBuilder()
+        .delete()
+        .from(users)
+        .where("name = :name", { name: name })
+        .execute()
+
+        if(deleteData){
+            return true
+        }
+
+        return false
+    }
 }
