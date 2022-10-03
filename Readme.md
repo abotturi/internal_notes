@@ -7,7 +7,7 @@ Desenvolvido por **Alan Botturi**
     > Se caso não estiver, instalar
  - Instalar o NodeJs
  - Liberar a porta **8080** e **5432** do computados
- - Entrar na raiz da pasta e dar o comdano ```npm i``` logo apos ```docker-compose up --build```
+ - Entrar na raiz da pasta e dar o comando ```npm i``` logo apos ```docker-compose up --build```
     
     > Esse comando iniciara o servidor e criara o banco de dados ja com as tabelas necessárias
     > Se tudo inicializar certo, ira aparecer</br> **Servidor aberto na porta 8080** e **Data Source has been initialized!**
