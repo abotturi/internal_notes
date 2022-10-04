@@ -6,7 +6,7 @@ Desenvolvido por **Alan Botturi**
  - Checar se o dokcer-compose esta instalado ```docker-compose -v```
     > Se caso não estiver, instalar
  - Instalar o NodeJs
- - Liberar a porta **8080** e **5432** do computados
+ - Liberar a porta **8080** e **5432** do computador
  - Entrar na raiz da pasta e dar o comando ```npm i``` logo apos ```docker-compose up --build```
     
     > Esse comando iniciara o servidor e criara o banco de dados ja com as tabelas necessárias
